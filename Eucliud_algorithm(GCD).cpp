@@ -1,4 +1,4 @@
-//  O[sqrt(n)]
+//  O[logn]
 
 #include <bits/stdc++.h>
 using namespace std;
