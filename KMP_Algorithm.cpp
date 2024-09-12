@@ -5,17 +5,18 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-void search (string pat, string txt) {
-    vector <int> lps(pat.size(), 0);
+void search(string pat, string txt) {
+    vector<int> lps(pat.size(), 0);
 
+    // Preprocess the pattern (calculate LPS array)
     for (int i = 1; i < pat.size(); i++) {
-        int j = lps[i-1];
+        int j = lps[i - 1];
 
         while (j > 0 && pat[j] != pat[i]) {
-            j = lps[j-1];
+            j = lps[j - 1];
         }
 
-        if (pat[j] == pat[i])j++;
+        if (pat[j] == pat[i]) j++;
 
         lps[i] = j;
     }
@@ -23,33 +24,37 @@ void search (string pat, string txt) {
     int m = pat.size();
     int n = txt.size();
     int i = 0, j = 0, cnt = 0;
-    vector <int> ans;
+    vector<int> ans;
 
+    // Traverse the text and search for the pattern
     while (i < n) {
         if (pat[j] == txt[i]) {
             i++;
             j++;
         }
+
         if (j == m) {
             cnt++;
-            ans.push_back(i-(m-1)); // 3 - (-2) = 1
-            j = lps[j-1];
-        }
-        else if (pat[j] != txt[i]) {
-            if (j == 0)i++;
-            j = lps[j-1];
+            ans.push_back(i - m + 1);  // Corrected index for 1-based result
+            j = lps[j - 1];
+        } else if (i < n && pat[j] != txt[i]) {
+            if (j == 0) {
+                i++;
+            } else {
+                j = lps[j - 1];
+            }
         }
     }
 
-    cout << "cnt : " << cnt << endl;
+    cout << "Count: " << cnt << endl;
 
     for (auto it : ans) {
-        cout << it << " ";
+        cout << it << " ";  // Printing the 1-based starting index
     }
     cout << endl;
 }
 
-int main () {
+int main() {
     string txt, pat;
     cin >> txt >> pat;
     search(pat, txt);
