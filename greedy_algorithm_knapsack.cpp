@@ -5,7 +5,7 @@ int main () {
     int n, w;
     cin >> n >> w;
     vector<int> weight(n), profit(n);
-    vector<double > ratio;
+    vector<double> ratio;
 
     for (int i=0; i<n; i++) {
         cin >> weight[i];
