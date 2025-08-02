@@ -1,72 +1,51 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int solve (int arr[], int l, int r) {
-    int ans = 0;
+ll binary_search(vector<ll>&v, ll n, ll tar) {
+    ll l = 0, r = n-1;
 
     while (l <= r) {
-        int mid = (l + r) / 2;
-        if (mid < r && arr[mid + 1] < arr[mid]) {
-            ans = mid + 1;
-            break;
+        ll mid = (l + r) / 2;
+
+        if (v[mid] == tar) {
+            return mid;
         }
-        else if (mid > l && arr[mid] < arr[mid-1]) {
-            ans = mid;
-            break;
+        // left half sorted
+        else if (v[l] <= v[mid]) {
+            if (v[l] <= tar && tar <= v[mid]) {
+                r = mid - 1;
+            }
+            else {
+                l = mid + 1;
+            }
         }
-        if (arr[r] > arr[mid]) {
-            r = mid - 1;
-        }
+        // right half sorted
         else {
-            l = mid + 1;
+            if (v[mid] <= tar && tar <= v[r]) {
+                l = mid + 1;
+            }
+            else {
+                r = mid - 1;
+            }
         }
     }
-
-    return ans;
+    return -1;
 }
 
-bool Binary_search (int arr[], int l, int n, int x) {
-    int r = n-1;
+int main() {
+    fast;
+    ll n, tar;
+    cin >> n >> tar;
+    vector<ll> v(n);
 
-    while (l <= r) {
-        int mid = (l + r) / 2;
-
-        if (arr[mid] == x) {
-            return true;
-        }
-        else if (arr[mid] < x) {
-            l = mid + 1;
-        }
-        else {
-            r = mid - 1;
-        }
+    for (auto &it: v) {
+        cin >> it;
     }
-    return false;
-}
-
-int main () {
-    int n;
-    cin >> n;
-    int arr[n+3];
-
-    for (int i=0; i<n; i++) {
-        cin >> arr[i];
-    }
-
-    int first_ele = solve(arr, 0, n-1);
-    //cout << first_ele << endl;
-
-    int x;
-    cin >> x;
-
-    bool result1 = Binary_search(arr, 0, first_ele-1, x);
-    bool result2 = Binary_search(arr, first_ele, n-1, x);
-
-    if (result1 == true || result2 == true) {
-        cout << "It is exist" << endl;
+    if (binary_search(v, n, tar) == -1) {
+        cout << "Target not exist" << endl;
     }
     else {
-        cout << "It is not exist" << endl;
+        cout << "Target is here : " << binary_search(v, n, tar) << endl;
     }
 
     return 0;
