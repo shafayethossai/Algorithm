@@ -1,16 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int solve (int arr[], int n) {
-    int sum = 0;
-
-    for (int i=1; i<=n; i++) {
-        sum += i*(n-i+1) * arr[i];
-    }
-
-    return sum;
-}
-
 int main () {
     int tc;
     cin >> tc;
@@ -23,7 +13,12 @@ int main () {
         for (int i=1; i<=n; i++) {
             cin >> arr[i];
         }
-        cout << solve(arr, n) << endl;
+        int sum = 0;
+
+        for (int i=1; i<=n; i++) {
+            sum += i*(n-i+1) * arr[i];
+        }
+        cout << sum << endl;
     }
 
     return 0;
